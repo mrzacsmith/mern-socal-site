@@ -3,6 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const expressValidator = require('express-validator')
+const cookieParser = require('cookie-parser')
 require('colors')
 
 // db
@@ -17,6 +18,7 @@ const authRoutes = require('./routes/auth.js')
 const app = express()
 
 app.use(express.json())
+app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(expressValidator())
 
