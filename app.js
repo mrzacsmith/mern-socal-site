@@ -18,6 +18,7 @@ mongoose
 
 // routes
 const postRoutes = require('./routes/post.js')
+const statusRoutes = require('./routes/statusCheck.js')
 
 const app = express()
 
@@ -26,6 +27,7 @@ app.use(morgan('dev'))
 app.use(expressValidator())
 
 app.use(postRoutes)
+app.use(statusRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () =>
