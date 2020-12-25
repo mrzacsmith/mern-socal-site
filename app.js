@@ -6,15 +6,8 @@ const expressValidator = require('express-validator')
 require('colors')
 
 // db
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
-  .then(() => console.log('** MongoDB is connected'.america))
-  .catch('error', (err) =>
-    console.error(` DB connection error: ${err.message}`.red)
-  )
+const connectDb = require('./utils/connectDb.js')
+connectDb()
 
 // routes
 const postRoutes = require('./routes/post.js')
