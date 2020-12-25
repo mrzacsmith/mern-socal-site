@@ -12,6 +12,7 @@ connectDb()
 // routes
 const postRoutes = require('./routes/post.js')
 const statusRoutes = require('./routes/statusCheck.js')
+const authRoutes = require('./routes/auth.js')
 
 const app = express()
 
@@ -21,7 +22,9 @@ app.use(expressValidator())
 
 app.use(postRoutes)
 app.use(statusRoutes)
+app.use('/auth', authRoutes)
 
+// server
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () =>
   console.log(`\n** App is listening on port ${PORT}`.america)
