@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const expressJwt = require('express-jwt')
 const User = require('../models/User.js')
 
 exports.signup = async (req, res) => {
@@ -10,15 +11,6 @@ exports.signup = async (req, res) => {
   res.status(201).json({
     message: `Sign up for ${newUser.name} at ${newUser.email} was successful! Please sign in!!`,
   })
-}
-
-exports.getUsers = async (req, res) => {
-  const users = await User.find().select('_id name email')
-  try {
-    return res.status(200).json({ users })
-  } catch (err) {
-    console.log(err.message)
-  }
 }
 
 exports.signin = (req, res) => {
@@ -52,3 +44,9 @@ exports.signout = (req, res) => {
   res.clearCookie('t')
   return res.status(200).json({ message: 'Sign out success!' })
 }
+
+exports.requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ['HS256'],
+  userProperty: 'auth',
+})

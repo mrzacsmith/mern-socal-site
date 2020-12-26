@@ -14,6 +14,7 @@ connectDb()
 const postRoutes = require('./routes/post.js')
 const statusRoutes = require('./routes/statusCheck.js')
 const authRoutes = require('./routes/auth.js')
+const userRoutes = require('./routes/users.js')
 
 const app = express()
 
@@ -22,9 +23,15 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(expressValidator())
 
-app.use(postRoutes)
-app.use(statusRoutes)
+app.use('/posts', postRoutes)
+app.use('/status', statusRoutes)
 app.use('/auth', authRoutes)
+app.use('/users', userRoutes)
+
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError')
+    res.status(401).json({ error: 'Unauthorized' })
+})
 
 // server
 const PORT = process.env.PORT || 5000
